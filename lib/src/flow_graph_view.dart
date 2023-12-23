@@ -1,9 +1,7 @@
 // Copyright (c) 2022, the flow_graph project authors. Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-
 import 'package:flutter/material.dart';
-
 import 'focus.dart';
 import 'graph.dart';
 import 'graph_view.dart';
@@ -19,7 +17,6 @@ class FlowGraphView<T> extends StatefulWidget {
       this.onSelectChanged,
       this.onEdgeColor})
       : super(key: key);
-
   final GraphNode<T> root;
   final Axis direction;
   final bool centerLayout;
@@ -29,14 +26,12 @@ class FlowGraphView<T> extends StatefulWidget {
 
   ///Custom edge color
   final OnEdgeColor<T>? onEdgeColor;
-
   @override
   _FlowGraphViewState<T> createState() => _FlowGraphViewState<T>();
 }
 
 class _FlowGraphViewState<T> extends State<FlowGraphView<T>> {
   final GraphFocusManager _focusManager = GraphFocusManager();
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -50,7 +45,6 @@ class _FlowGraphViewState<T> extends State<FlowGraphView<T>> {
                 direction: widget.direction,
                 centerLayout: widget.centerLayout,
                 onEdgeColor: widget.onEdgeColor);
-
             return GestureDetector(
               onTap: () {
                 GraphFocus.of(context).clearFocus();
@@ -78,7 +72,6 @@ class _FlowGraphViewState<T> extends State<FlowGraphView<T>> {
             : widget.builder(context, root));
     var walked = <GraphNode>[root];
     var visited = <GraphNode>[root];
-
     while (walked.isNotEmpty) {
       var currentNode = walked.removeAt(0);
       if (currentNode.nextList.isNotEmpty) {
@@ -112,11 +105,9 @@ class _NodeWidget extends StatefulWidget {
     required this.node,
     this.onFocus,
   }) : super(key: key);
-
   final Widget child;
   final GraphNode node;
   final VoidCallback? onFocus;
-
   @override
   _NodeWidgetState createState() => _NodeWidgetState();
 }
@@ -124,7 +115,6 @@ class _NodeWidget extends StatefulWidget {
 class _NodeWidgetState extends State<_NodeWidget> {
   bool _hovered = false;
   bool _currentFocus = false;
-
   @override
   void initState() {
     _currentFocus = widget.node.focusNode.hasFocus;
@@ -142,7 +132,7 @@ class _NodeWidgetState extends State<_NodeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var focusColor = Theme.of(context).colorScheme.secondaryVariant;
+    var focusColor = Theme.of(context).colorScheme.secondaryContainer;
 
     return GestureDetector(
       onTap: () {

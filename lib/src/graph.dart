@@ -115,7 +115,6 @@ class Graph<T> {
         }
         //遍历出度节点
         for (var node in current.nextList) {
-          assert(node.box != null);
           //if node is in currentNode's family
           //判断当前节点是否为该出度节点的"父节点"，
           if (node.prevList.first == current) {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'dag_flow_page.dart';
 import 'draggable_node_page.dart';
@@ -27,13 +26,13 @@ class _HomePageState extends State<HomePage> {
             Card(
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => DagFlowPage()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const DagFlowPage()));
                 },
-                child: Column(
+                child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(
                       Icons.cable,
                       size: 48,
@@ -50,12 +49,12 @@ class _HomePageState extends State<HomePage> {
               child: InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DraggableNodePage()));
+                      builder: (context) => const DraggableNodePage()));
                 },
-                child: Column(
+                child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(
                       Icons.widgets,
                       size: 48,

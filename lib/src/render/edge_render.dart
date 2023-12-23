@@ -217,9 +217,7 @@ class _EdgePainter extends CustomPainter with ChangeNotifier {
       {Color color = Colors.grey,
       this.selectedColor = Colors.greenAccent,
       double width = 2,
-      this.direction = Axis.horizontal,
-      this.start = Offset.zero,
-      this.end = Offset.zero})
+      this.direction = Axis.horizontal})
       : _color = color {
     this.width = width;
     _setPainterColor(color);
@@ -245,8 +243,8 @@ class _EdgePainter extends CustomPainter with ChangeNotifier {
     _setPainterColor(c);
   }
 
-  Offset start;
-  Offset end;
+  Offset start = Offset.zero;
+  Offset end = Offset.zero;
   Axis direction = Axis.horizontal;
   bool _selected = false;
   bool get selected => _selected;

@@ -1,6 +1,5 @@
 import 'package:flow_graph/flow_graph.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class DraggableNodePage extends StatefulWidget {
   const DraggableNodePage({Key? key}) : super(key: key);
@@ -110,7 +109,7 @@ class _DraggableNodePageState extends State<DraggableNodePage> {
                     child: _singleOutNode(),
                   ),
                   feedback: Card(
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                     elevation: 6,
                     child: _singleOutNode(),
                   ),
@@ -128,7 +127,7 @@ class _DraggableNodePageState extends State<DraggableNodePage> {
                     child: _multiOutNode(),
                   ),
                   feedback: Card(
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                     elevation: 6,
                     child: _multiOutNode(),
                   ),
@@ -148,7 +147,7 @@ class _DraggableNodePageState extends State<DraggableNodePage> {
                     child: _multiParentNode(),
                   ),
                   feedback: Card(
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                     elevation: 6,
                     child: _multiParentNode(),
                   ),
@@ -195,7 +194,7 @@ class _DraggableNodePageState extends State<DraggableNodePage> {
                   nodeSecondaryMenuItems: (node) {
                     return [
                       PopupMenuItem(
-                        child: Text('Delete'),
+                        child: const Text('Delete'),
                         onTap: () {
                           setter(() {
                             node.deleteSelf();
@@ -224,9 +223,9 @@ class _DraggableNodePageState extends State<DraggableNodePage> {
   Widget _singleOutNode() => Container(
         width: 160,
         padding: const EdgeInsets.all(16),
-        child: Row(
+        child: const Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             Icon(Icons.panorama_wide_angle),
             SizedBox(
               width: 16,
@@ -239,9 +238,9 @@ class _DraggableNodePageState extends State<DraggableNodePage> {
   Widget _multiOutNode() => Container(
         width: 160,
         padding: const EdgeInsets.all(16),
-        child: Row(
+        child: const Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             Icon(Icons.list),
             SizedBox(
               width: 16,
@@ -254,9 +253,9 @@ class _DraggableNodePageState extends State<DraggableNodePage> {
   Widget _multiParentNode() => Container(
         width: 160,
         padding: const EdgeInsets.all(16),
-        child: Row(
+        child: const Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             Icon(Icons.menu),
             SizedBox(
               width: 16,
