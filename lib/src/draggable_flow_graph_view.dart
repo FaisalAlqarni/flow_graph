@@ -27,11 +27,13 @@ class DraggableFlowGraphView<T> extends StatefulWidget {
       this.onDeleted,
       this.onSelectChanged,
       this.nodeSecondaryMenuItems,
-      this.onEdgeColor})
+      this.onEdgeColor,
+      this.menuColor})
       : super(key: key);
 
   final GraphNode<T> root;
   final Axis direction;
+  final Color? menuColor;
   final bool enableDelete;
   final bool enabled;
   final bool centerLayout;
@@ -245,6 +247,7 @@ class _DraggableFlowGraphViewState<T> extends State<DraggableFlowGraphView<T>> {
     node.buildBox(
       overflowPadding: const EdgeInsets.all(14),
       childWidget: _NodeWidget(
+        menuColor: widget.menuColor,
         node: node,
         graphDirection: widget.direction,
         enableDelete: widget.enableDelete,
@@ -305,6 +308,7 @@ class _NodeWidget extends StatefulWidget {
     this.onPreviewConnectMove,
     this.onPreviewConnectStop,
     this.secondaryMenuItems,
+    this.menuColor,
   }) : super(key: key);
 
   final Widget child;
@@ -317,6 +321,7 @@ class _NodeWidget extends StatefulWidget {
   final void Function(Offset)? onPreviewConnectMove;
   final void Function(Offset)? onPreviewConnectStop;
   final List<PopupMenuItem> Function()? secondaryMenuItems;
+  final Color? menuColor;
 
   @override
   _NodeWidgetState createState() => _NodeWidgetState();
@@ -347,6 +352,8 @@ class _NodeWidgetState extends State<_NodeWidget> {
     var focusColor = Theme.of(context).colorScheme.secondaryContainer;
     var renderBox = context.findRenderObject() as RenderBox?;
     var boxSize = Size.zero;
+    var menuColor =
+        widget.menuColor ?? Theme.of(context).colorScheme.secondaryContainer;
     if (renderBox != null) {
       boxSize = renderBox.size;
     }
@@ -364,6 +371,7 @@ class _NodeWidgetState extends State<_NodeWidget> {
                 showMenu(
                     context: context,
                     elevation: 6,
+                    color: menuColor,
                     position: RelativeRect.fromLTRB(
                       details.globalPosition.dx,
                       details.globalPosition.dy,
