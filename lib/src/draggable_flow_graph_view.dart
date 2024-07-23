@@ -28,7 +28,8 @@ class DraggableFlowGraphView<T> extends StatefulWidget {
       this.onSelectChanged,
       this.nodeSecondaryMenuItems,
       this.onEdgeColor,
-      this.menuColor})
+      this.menuColor,
+      this.transformationController})
       : super(key: key);
 
   final GraphNode<T> root;
@@ -39,6 +40,7 @@ class DraggableFlowGraphView<T> extends StatefulWidget {
   final bool centerLayout;
   final EdgeInsets padding;
   final NodeWidgetBuilder<T> builder;
+  final TransformationController? transformationController;
 
   ///Will add a connection to next node
   final WillConnect<T>? willConnect;
@@ -83,9 +85,21 @@ class _DraggableFlowGraphViewState<T> extends State<DraggableFlowGraphView<T>> {
   final _controller = GraphViewController();
 
   final GraphFocusManager _focusManager = GraphFocusManager();
+  TransformationController _zoomTransformationController =
+      TransformationController();
+
+  @override
+  void initState() {
+    if (widget.transformationController != null) {
+      _zoomTransformationController = widget.transformationController!;
+    }
+    _zoomTransformationController.value = Matrix4.identity();
+    super.initState();
+  }
 
   @override
   void dispose() {
+    _zoomTransformationController.dispose();
     _focusManager.dispose();
     super.dispose();
   }
@@ -112,23 +126,30 @@ class _DraggableFlowGraphViewState<T> extends State<DraggableFlowGraphView<T>> {
               },
               child: DragTarget<GraphNodeFactory<T>>(
                 builder: (context, candidate, reject) {
-                  return GraphView(
-                    key: _graphViewKey,
-                    controller: _controller,
-                    graph: _graph,
-                    onPaint: (canvas) {
-                      if (_previewConnectStart.distance > 0 &&
-                          _previewConnectEnd.distance > 0) {
-                        _previewConnectRender.render(
-                            context: context,
-                            canvas: canvas,
-                            start: Offset(_previewConnectStart.dx,
-                                _previewConnectStart.dy),
-                            end: Offset(
-                                _previewConnectEnd.dx, _previewConnectEnd.dy),
-                            direction: _graph.direction);
-                      }
-                    },
+                  return InteractiveViewer(
+                    boundaryMargin: const EdgeInsets.all(double.infinity),
+                    transformationController: _zoomTransformationController,
+                    maxScale: 5.6,
+                    minScale: 0.01,
+                    trackpadScrollCausesScale: true,
+                    child: GraphView(
+                      key: _graphViewKey,
+                      controller: _controller,
+                      graph: _graph,
+                      onPaint: (canvas) {
+                        if (_previewConnectStart.distance > 0 &&
+                            _previewConnectEnd.distance > 0) {
+                          _previewConnectRender.render(
+                              context: context,
+                              canvas: canvas,
+                              start: Offset(_previewConnectStart.dx,
+                                  _previewConnectStart.dy),
+                              end: Offset(
+                                  _previewConnectEnd.dx, _previewConnectEnd.dy),
+                              direction: _graph.direction);
+                        }
+                      },
+                    ),
                   );
                 },
                 onWillAccept: (factory) => widget.enabled && factory != null,
