@@ -52,5 +52,5 @@ void error(
     tagStr += '(${object.runtimeType.toString()})';
   }
 
-  _logger.e('$tagStr: ${message ?? ''}', err, trace);
+  _logger.e('$tagStr: ${message ?? ''}', error: err, stackTrace: trace);
 }
